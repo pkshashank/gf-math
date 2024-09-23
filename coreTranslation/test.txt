@@ -1,0 +1,1 @@
+for every nonnegative integer $ n $ , $ 2 ^ { n } + 6 ^ { n } $ is an even integer .
