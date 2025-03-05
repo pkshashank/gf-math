@@ -1,0 +1,36 @@
+(; to be appended to mathbase.dk before checking in dedukti ;)
+
+prop10 : Proof (even 0).
+
+prop20 : (n : Elem Nat) -> Proof (even n) -> Proof (odd (plus n 1)).
+
+prop30 : (n : Elem Nat) -> Proof (odd n) -> Proof (even (plus n 1)).
+
+prop40 : Proof (forall Nat (n => or (even n) (odd n))).
+
+prop50 : Proof (forall Nat (n => not (and (even n) (odd n)))).
+
+prop60 : Proof (forall Nat (n => Eq (plus n 0) n)).
+
+prop70 : Proof (odd 1).
+
+prop80 : Proof (even 2).
+
+prop90 : (n : Elem Nat) -> Proof (if (and (even n) (prime n)) (Eq n 2)).
+
+prop100 : (a : Elem Int) -> (b : Elem Int) -> (c : Elem Int) -> Proof (Eq (plus (plus a b) c) 0) -> Proof (Lt (times (times a b) c) 0).
+
+prop110 : (a : Elem Int) -> (c : Elem Int) -> Proof (and (odd a) (odd c)) -> Proof (forall Int (b => even (plus (times a b) (times b c)))).
+
+prop120 : (a : Elem Int) -> (b : Elem Int) -> Proof (iff (even (times a b)) (or (even a) (even b))).
+
+prop130 :  (x : Elem Int) -> (y : Elem Int) -> Proof (if (odd (times x y)) (and (odd x) (odd y))).
+
+def same_parity : Elem Int -> Elem Int -> Prop := x => y => or (and (even x) (even y)) (and (odd x) (odd y)).
+
+prop140 : (x : Elem Int) -> (y : Elem Int) -> Proof (iff (same_parity x y) (even (plus x y))).
+
+prop150 : (n : Elem Nat) -> Proof (even (minus (pow n 3) n)).
+
+prop160 : (a : Elem Int) -> (b : Elem Int) -> Proof (if (same_parity (plus a b) (times a b)) (and (even a) (even b))).
+

@@ -1,0 +1,57 @@
+-- very minimal Lean syntax for the generated Lean
+
+entrypoints Module, Jmt, Exp ;
+
+layout toplevel ;
+
+comment "/-" "-/" ;
+comment "--" ;
+
+MJmts. Module ::= [Jmt] ;
+
+JAxiom. Jmt ::= "axiom" LIdent [Hypo] ":" Exp ";" ;
+JThm.   Jmt ::= "theorem" LIdent [Hypo] ":" Exp ":=" Exp ";" ;
+JDef.   Jmt ::= "def" LIdent [Hypo] ":" Exp ":=" Exp ";" ;
+
+terminator Jmt "" ;
+
+EIdent.  Exp9 ::= LIdent ;
+EInt.    Exp9 ::= Integer ;
+EApp.    Exp7 ::= Exp7 Exp8 ;
+ETimes.  Exp6 ::= Exp6 "*" Exp7 ;
+EDiv.    Exp6 ::= Exp6 "/" Exp7 ;
+EPlus.   Exp5 ::= Exp5 "+" Exp6 ;
+EMinus.  Exp5 ::= Exp5 "-" Exp6 ;
+ENot.    Exp5 ::= "¬" Exp6 ;
+EEq.     Exp4 ::= Exp5 "=" Exp5 ;
+ELt.     Exp4 ::= Exp5 "<" Exp5 ;
+EGt.     Exp4 ::= Exp5 ">" Exp5 ;
+ENeq.    Exp4 ::= Exp5 "≠" Exp5 ;
+ELeq.    Exp4 ::= Exp5 "≤" Exp5 ;
+EGeq.    Exp4 ::= Exp5 "≥" Exp5 ;
+EAnd.    Exp3 ::= Exp3 "∧" Exp4 ;
+EOr.     Exp3 ::= Exp3 "∨" Exp4 ;
+EAll.    Exp3 ::= "∀" [LIdent] ":" Exp6 "," Exp3 ;
+EAllW.   Exp3 ::= "forall" [LIdent] ":" Exp6 "," Exp3 ;
+EExist.  Exp3 ::= "∃" [LIdent] ":" Exp6 "," Exp3 ;
+EExistW. Exp3 ::= "exists" [LIdent] ":" Exp6 "," Exp3 ;
+EIf.     Exp2 ::= Exp3 "→" Exp2 ; 
+EIff.    Exp2 ::= Exp3 "↔" Exp3 ; 
+EAbs.    Exp2 ::= "λ" [LIdent] "=>" Exp2 ; 
+EAbsW.   Exp2 ::= "fun" [LIdent] "=>" Exp2 ; 
+EFunDep. Exp1 ::= Hypo "->" Exp1 ;
+EFun.    Exp1 ::= Exp2 "->" Exp1 ;
+
+coercions Exp 9 ;
+
+separator nonempty LIdent "" ;
+
+HVarExp. Hypo ::=  "(" [LIdent] ":" Exp ")" ;
+
+separator Hypo "" ;
+
+
+token LIdent (letter (letter | digit | '_' | '\'' | 'ℝ' | 'ℕ' | 'ℤ' | 'ℚ')*) ;
+
+-- Nat.gcd, Nat.factorial
+

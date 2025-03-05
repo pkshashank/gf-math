@@ -1,0 +1,91 @@
+Set : Type.
+Prop : Type.
+
+(; ignored in Dedukti2Core ;) 
+Elem : Set -> Type.
+Proof : Prop -> Type.
+
+(; logical operators, hard-coded in MathCore ;)
+false : Prop.
+and : (A : Prop) -> (B : Prop) -> Prop.
+or : (A : Prop) -> (B : Prop) -> Prop.
+if : Prop -> Prop -> Prop.
+forall : (A : Set) -> (Elem A -> Prop) -> Prop.
+exists : (A : Set) -> (Elem A -> Prop) -> Prop.
+
+def not : Prop -> Prop := A => if A false.
+def iff : Prop -> Prop -> Prop := A => B => and (if A B) (if B A).
+
+(; number domains, meant to be increasing subsets of Complex ;)
+(; but the simplest thing is to have just one set Number; cf. Ganesalingam p. 126-  ;)
+Num : Set.
+def Dig : Set := Num.
+def Nat : Set := Num.
+def Int : Set := Num.
+def Rat : Set := Num.
+def Real : Set := Num.
+def Complex : Set := Num.
+
+(; digits ;)
+0 : Elem Dig.
+1 : Elem Dig.
+2 : Elem Dig.
+3 : Elem Dig.
+4 : Elem Dig.
+5 : Elem Dig.
+6 : Elem Dig.
+7 : Elem Dig.
+8 : Elem Dig.
+9 : Elem Dig.
+
+(; slightly non-canonical representation of natural numbers in base 10 ;)
+(; 123 = nn 1 (nn 2 (nd 3)) ;)
+(; leading zeros should be ignored ;)
+nd : Elem Dig -> Elem Nat.
+nn : Elem Dig -> Elem Nat -> Elem Nat.
+
+(; basic comparison relations ;)
+Eq : (x : Elem Real) -> (y : Elem Real) -> Prop.
+Lt : Elem Real -> Elem Real -> Prop.
+Gt : Elem Real -> Elem Real -> Prop.
+Neq : Elem Real -> Elem Real -> Prop.
+Leq : Elem Real -> Elem Real -> Prop.
+Geq : Elem Real -> Elem Real -> Prop.
+
+positive : (x : Elem Real) -> Prop.
+negative : Elem Real -> Prop.
+
+(; basic arithmetic operations ;)
+plus : (x : Elem Real) -> (y : Elem Real) -> Elem Real.
+minus : Elem Real -> Elem Real -> Elem Real.
+times : Elem Real -> Elem Real -> Elem Real.
+div : Elem Real -> Elem Real -> Elem Real.
+pow : Elem Real -> Elem Real -> Elem Real.
+neg : Elem Real -> Elem Real.
+
+gcd : Elem Int -> Elem Int -> Elem Int.
+
+abs : Elem Real -> Elem Real.
+factorial : Elem Nat -> Elem Nat.
+
+(; predicates of integers ;)
+even : Elem Int -> Prop.
+def odd : Elem Int -> Prop := n => not (even n).
+
+def divisible : Elem Int -> Elem Int -> Prop := n => m => exists Int (k => Eq n (times k m)).
+def prime : Elem Nat -> Prop := n => not (exists Nat (m => and (Lt 1 m) (and (Lt m n) (divisible n  m)))).
+
+(; set operations ;)
+function : Set -> Set -> Set.
+union : Set -> Set -> Set.
+intersection : Set -> Set -> Set.
+difference : Set -> Set -> Set.
+powerset : Set -> Set.
+
+positivePart : Set -> Set.
+negativePart : Set -> Set.
+
+(; hard-coded in MathCore ;)
+suchthat : (A : Set) -> (B : Elem A -> Prop) -> Set.
+fst : (A : Set) -> (B : (Elem A -> Prop)) -> Elem (suchthat A B) -> Elem A.
+
